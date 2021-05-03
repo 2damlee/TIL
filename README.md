@@ -61,6 +61,13 @@ I summarize here what I learned today
 <a href='https://github.com/2damlee/Spring/blob/master/Springboot.md'>07. SpringBoot setting</a><br>
 <a href='https://github.com/2damlee/Spring/blob/master/DB%20Backup:recovery.md'>Database back up</a>
 
+### PYTHON
+<a href='/PYTHON/BASIC.md'>01. Basic - value/type/operations</a><br>
+<a href='/PYTHON/BASIC2_Fuction.md'>02. Basic - Function</a><br>
+<a href='/PYTHON/BASIC3_Module:Exception.md'>03. Baisc - Module & Exception</a><br>
+<a href='/PYTHON/File.md'>04. Libarary - CRUD File</a><br>
+<a href='/PYTHON/Data processing.md'>05. Data processing(1)</a><br>
+
 
 <br><br><br>
 #### install||System link Error and my solutions
