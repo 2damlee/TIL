@@ -70,6 +70,7 @@ I summarize here what I learned today
 
 
 <br><br><br>
-#### install||System link Error and my solutions
+#### install or System link Error and my solutions
 <a href='/SERVLET:JSP/Eclipse- SQL 연결 및 오류.md'> Eclipse- SQL link</a><br>
+<a href='/WEB/Tomcat 설치:오류.md'> Tomcat install </a><br>
 
