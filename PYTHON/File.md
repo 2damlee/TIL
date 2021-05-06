@@ -95,4 +95,148 @@
   file4.close() #반드시 닫아주기
   ````
 
-  
+
+
+
+
+
+#### raspberrypi에서 spring server로 file 전송하기
+
+> Spring에 FileUpload가 구현되어 있는 상태 가정
+
+
+
+1. Spring이 깔려있는 컴퓨터의 ip주소 알아오기
+   * 명령어 ifconfig|grep inet
+
+
+
+2. Spring Project tomcat 실행 후 라즈베리파이에서 해당 ip주소 열리는지 확인 
+
+
+
+3. 파일 처리 
+
+   ````python
+   # 기가지니 호출 정보 데이터 생성
+   
+   
+   def result_test(keyword, rc):
+   	global filename
+   	#when call test() - time, keword, code -> save to file(result.txt)
+   	#setting current time
+   	import datetime
+   	now = datetime.datetime.now()
+   	now = now.strftime("%y-%m-%d %H:%M:%S")
+   	#write to file
+   	file = open('result.txt', 'a')
+   	filename= "result.txt"
+   	file.write(now+","+keyword+","+str(rc)+"\n")
+   	file.close()
+   
+   # 데이터 읽어오기
+   	# 1. 테이블 형태 출력
+     # 2. '기가지니' 호출 횟수/ 코드 200번 생성 횟수 구하기 / 오늘 호출 횟수 구하기 
+   def result_read_test():
+   	#read result.txt - return stringtype
+   	file = open('result.txt', 'r')
+   
+   	time_list = []	
+   	keyword_list = []
+   	response_list = []
+   	file_dict = {}
+   	
+   	for line in file: 
+   		line_list = line.rstrip().split(',')
+   		time_list.append(line_list[0])
+   		keyword_list.append(line_list[1])
+   		response_list.append(line_list[2])
+   
+   	file_dict['time'] = time_list
+   	file_dict['keyword'] = keyword_list
+   	file_dict['response'] = response_list
+   
+   	file.close()
+      
+   	for i in file_dict.keys():
+   		print(i, end=" ") #end default value=\n
+   	print()
+   
+   	for i in range(0, len(file_dict['keyword']), 1):
+   		for k in file_dict.keys():
+   			print(file_dict[k][i], end = ' ')
+   		print()
+   	print(file_dict['keyword'].count('기가지니'))
+   	print(file_dict['response'].count('200'))
+   
+   	#todays call
+   	import datetime
+   	now = datetime.datetime.now()
+   	now = now.strftime("%y-%m-%d")
+   
+   	today_call = 0 
+   	for t in file_dict['time']: 
+   		if t[:8] == now:
+   			today_call += 1
+   	print('today call = ', today_call)
+   	return file_dict
+   ````
+
+   ````python
+   # 그래프 생성/저장하기 
+   def result_graph_test():
+   	global filename2
+   	file_dict = result_read_test()
+   
+   	#each keyword's call times graph
+   	import matplotlib.pyplot as plt
+    	import matplotlib.font_manager as fm
+   	for f in fm.fontManager.ttflist:
+   		print(f.name)
+   	plt.rcParams['font.family'] = 'NanumGothic'
+   	plt.hist(file_dict['keyword'])
+   	plt.title('keyword call count')
+   	plt.xlabel('keyword')
+   	plt.savefig('key.pdf')
+   	filename2 = 'key.pdf'
+   	plt.show()
+   
+   	#show response values with plot(barh)
+   	response_cnt_dict = {}
+   	for k in set(file_dict['response']):
+   		response_cnt_dict[k] = file_dict['response'].count(k)
+   	
+   	k_list=[]
+   	v_list=[]
+   	for k, v in response_cnt_dict.items():
+   			k_list.append(k)
+   			v_list.append(v)
+   
+   	print(k_list)
+   	print(v_list)
+   	plt.barh(k_list, v_list)
+   	plt.rcParams['font.family'] = 'NanumGothic'
+   	plt.title('response count')
+   	plt.ylabel('response code')
+   	plt.xlabel('response code count')
+   	plt.show()
+   ````
+
+   ````python
+   #전송하기 
+   def result_server_test():
+   	#전송할 url : http://192.168.0.150:9091/fileupload
+   	#result.txt, response.png upload
+   	#terminal pip3 install requests
+   	import requests as rq
+   	textfile = open(filename, 'r')
+   	graphfile = open(filename2, 'rb')
+   	response = rq.post('http://192.168.0.150:9091/fileupload', 
+   						data={'name':'raspberrypi', 'description':'upload test'}, 
+   						files={'file1':textfile, 'file2':graphfile})
+   	print(response.status_code)
+   	print(response.text)
+   ````
+
+   
+
