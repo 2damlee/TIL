@@ -8,14 +8,14 @@
 - Graph Algorithms
 <br><br>
 
-### <a href='../devideAndConqure.md'>Divide and Conqure</a>
+### <a href='/devideAndConqure.md'>Divide and Conqure</a>
 - Binary search
 - Quick Sort
 - Merge Sort 
 - Selection problem 
 <br>
 
-### <a href='../dynamicProgramming.md'>Dynamic Programming</a>
+### <a href='/dynamicProgramming.md'>Dynamic Programming</a>
 - Program for Fibonacci numbers
 - Matrix Chain Multiplication
 - Shortest Paths
