@@ -80,4 +80,4 @@ I summarize here what I learned today
 <br><br><br>
 ### Algorithm
 (temporary)
-<a href='/ALGORITHM/Algoritm_topic.md'></a><br>
+<a href='/ALGORITHM/Algoritm_topic.md'> Algorithm basic </a><br>
